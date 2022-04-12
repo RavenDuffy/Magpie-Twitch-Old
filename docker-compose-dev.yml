@@ -4,6 +4,6 @@ services:
       context: ./ChatBot
       dockerfile: Dockerfile.dev
     ports:
-      - 3000:3000
+      - 3553:3553
     volumes:
       - ./ChatBot/src:/app/chatbot/src
