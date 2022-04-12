@@ -3,6 +3,6 @@ WORKDIR /app/chatbot
 COPY package.json .
 RUN yarn
 COPY . .
-EXPOSE 3553
+EXPOSE 3000
 
 CMD ["yarn", "dev"]

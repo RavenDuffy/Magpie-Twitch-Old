@@ -2,12 +2,11 @@
   "name": "chatbot",
   "version": "1.0.0",
   "description": "ChatBot for twitch.tv/wingamefast",
-  "main": "index.js",
+  "main": "src/magpie.js",
   "repository": "https://github.com/RavenDuffy/Magpie-Twitch",
   "author": "RavenDuffy",
   "license": "MIT",
   "dependencies": {
-    "fastify": "^3.28.0",
     "tmi.js": "^1.8.5",
     "ts-node": "^10.7.0",
     "ts-node-dev": "^1.1.8",

@@ -1,0 +1,8 @@
+FROM node
+WORKDIR /app/api
+COPY package.json .
+RUN yarn --frozen-lockfile --no-cache --production
+COPY . .
+EXPOSE 3553
+
+CMD ["yarn", "start"]
