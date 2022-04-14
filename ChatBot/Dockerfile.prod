@@ -3,6 +3,6 @@ WORKDIR /app/chatbot
 COPY package.json .
 RUN yarn --frozen-lockfile --no-cache --production
 COPY . .
-EXPOSE 3000
+EXPOSE 3550
 
 CMD ["yarn", "start"]
