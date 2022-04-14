@@ -15,10 +15,11 @@
   "devDependencies": {
     "nodemon": "^2.0.15",
     "ts-node": "^10.7.0",
+    "tsc-watch": "^5.0.3",
     "typescript": "^4.6.3"
   },
   "scripts": {
-    "dev": "tsc -w & nodemon -q -w dist dist/magpie.js &",
+    "dev": "tsc-watch --onSuccess \"node dist/magpie.js\"",
     "start": "tsc && node dist/magpie.js"
   }
 }
