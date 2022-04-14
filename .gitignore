@@ -1,6 +1,6 @@
 node_modules
 .pnp.cjs
 .env
-.yarn/
+\.yarn
 !./yarn/releases
 dist
