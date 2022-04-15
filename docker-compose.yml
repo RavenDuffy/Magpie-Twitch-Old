@@ -14,6 +14,6 @@ services:
     volumes:
       - ./ChatBot:/app/chatbot
     links:
-      - 'api:api'
+      - api
     depends_on:
       - api
