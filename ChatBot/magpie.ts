@@ -13,6 +13,6 @@ const config = {
 
 const client = new tmi.client(config)
 
-client.on('message', messageHandler)
+client.on('message', (...rest) => messageHandler(...rest, client))
 
 client.connect()

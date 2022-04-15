@@ -1,5 +1,6 @@
 import fs from 'fs'
 import { CommandExports, CommandList } from 'types/command'
+import { Client } from 'tmi.js'
 
 const cmds: CommandList[] = []
 fs.readdirSync('src/cmds', 'utf-8').forEach((file) => {
@@ -15,7 +16,8 @@ export const messageHandler = async (
   target: string,
   context: object,
   msg: string,
-  self: boolean
+  self: boolean,
+  client: Client
 ) => {
   if (self || !msg.startsWith('!')) return
 
@@ -24,5 +26,5 @@ export const messageHandler = async (
   const command = cmds.find((cmd) => Object.keys(cmd).includes(request))?.[
     request
   ]
-  command && command(target, context)
+  command && command(target, context, client)
 }

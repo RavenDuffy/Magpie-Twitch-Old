@@ -1,7 +1,7 @@
-import { CommonUserstate } from 'tmi.js'
+import { Command } from 'types/command'
 
-const followage = (target: string, context: CommonUserstate) => {
-  console.log(target, context, 'hello')
+const followage: Command = (target, context, client) => {
+  client.say(target, `${context['display-name']} has been following for `)
 }
 
 const aliases = ['followage', 'following']

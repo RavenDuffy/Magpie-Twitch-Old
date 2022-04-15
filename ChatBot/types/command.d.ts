@@ -1,6 +1,10 @@
-import { CommonUserstate } from 'tmi.js'
+import { Client, CommonUserstate } from 'tmi.js'
 
-export type Command = (target: string, context: CommonUserstate) => void
+export type Command = (
+  target: string,
+  context: CommonUserstate,
+  client: Client
+) => void
 
 export interface CommandExports {
   default: {
