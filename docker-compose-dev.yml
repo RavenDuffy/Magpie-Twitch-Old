@@ -3,17 +3,7 @@ services:
     build:
       context: ./API
       dockerfile: Dockerfile.dev
-    ports:
-      - 3553:3553
-    volumes:
-      - ./API:/app/api
   chatbot:
-    env_file:
-      - ./.env
     build:
       context: ./ChatBot
       dockerfile: Dockerfile.dev
-    ports:
-      - 3550:3550
-    volumes:
-      - ./ChatBot:/app/chatbot

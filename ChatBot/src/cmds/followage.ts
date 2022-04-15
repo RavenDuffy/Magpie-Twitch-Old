@@ -1,6 +1,9 @@
+import Axios from 'axios'
 import { Command } from 'types/command'
 
 const followage: Command = (target, context, client) => {
+  Axios.get('0.0.0.0:3553').then((res) => console.log(res?.data))
+
   client.say(target, `${context['display-name']} has been following for `)
 }
 

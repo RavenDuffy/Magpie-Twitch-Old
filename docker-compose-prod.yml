@@ -1,0 +1,9 @@
+services:
+  api:
+    build:
+      context: ./API
+      dockerfile: Dockerfile.prod
+  chatbot:
+    build:
+      context: ./ChatBot
+      dockerfile: Dockerfile.prod
