@@ -1,9 +1,15 @@
 services:
   api:
+    env_file:
+      - ./.env
+      - ./.env.dev
     build:
       context: ./API
       dockerfile: Dockerfile.dev
   chatbot:
+    env_file:
+      - ./.env
+      - ./.env.dev
     build:
       context: ./ChatBot
       dockerfile: Dockerfile.dev

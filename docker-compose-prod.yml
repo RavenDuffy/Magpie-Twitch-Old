@@ -1,9 +1,15 @@
 services:
   api:
+    env_file:
+      - ./.env
+      - ./.env.prod
     build:
       context: ./API
       dockerfile: Dockerfile.prod
   chatbot:
+    env_file:
+      - ./.env
+      - ./.env.prod
     build:
       context: ./ChatBot
       dockerfile: Dockerfile.prod

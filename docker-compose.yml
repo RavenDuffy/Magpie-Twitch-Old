@@ -1,14 +1,10 @@
 services:
   api:
-    env_file:
-      - ./.env
     ports:
       - 3553:3553
     volumes:
       - ./API:/app/api
   chatbot:
-    env_file:
-      - ./.env
     ports:
       - 3550:3550
     volumes:

@@ -1,5 +1,7 @@
 node_modules
 .pnp.cjs
 .env
+.env.*
 \.yarn
 dist
+auth.json
