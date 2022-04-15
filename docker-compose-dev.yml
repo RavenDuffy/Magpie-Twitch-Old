@@ -6,7 +6,7 @@ services:
     ports:
       - 3553:3553
     volumes:
-      - ./API/src:/app/api/src
+      - ./API:/app/api
   chatbot:
     env_file:
       - ./.env
