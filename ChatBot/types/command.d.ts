@@ -1,4 +1,4 @@
-import { CommonUserstate } from "tmi.js"
+import { CommonUserstate } from 'tmi.js'
 
 export type Command = (target: string, context: CommonUserstate) => void
 
