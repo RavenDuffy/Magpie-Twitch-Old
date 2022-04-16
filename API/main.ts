@@ -49,9 +49,7 @@ app.addHook('onRequest', async (_req, _res) => {
 app.get('/', (_req, res) => {
   res.send({ message: 'Welcome to the MagpieMod API!' })
 })
-app.get('/following', async (req, res) => {
-  followage(req, res, authFile)
-})
+app.get('/following', async (req, res) => followage(req, res, authFile))
 
 app.listen(3553, '0.0.0.0', (error) => {
   if (error) throw error
