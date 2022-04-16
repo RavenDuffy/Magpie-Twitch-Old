@@ -7,6 +7,7 @@ import Axios, { AxiosResponse } from 'axios'
 import { Auth, AuthResponse } from 'types/twitch'
 import { followage } from './src/cmds/following'
 import { CommandDescription, CommandDescriptionExport } from 'types/api'
+import { randomFact } from './src/cmds/random-fact'
 
 const app = Fastify({ logger: true })
 app.register(middie)
@@ -65,9 +66,13 @@ app.get('/', async (_req, res) => {
   )
   console.log(cmds)
 
-  const cmdStrings = cmds.map((cmd) => {
-    return `\n  endpoint: ${cmd.endpoint}\n\toptions: ${cmd.options}\n\tdescription: ${cmd.description}\n\n`
-  })
+  const cmdStrings = cmds
+    .map((cmd) => {
+      return `\n  endpoint: ${cmd.endpoint}\n\t${
+        cmd.options ? `options: ${cmd.options}\n\t` : ''
+      }description: ${cmd.description}\n`
+    })
+    .join('\n')
   console.log(cmdStrings)
 
   res.send(
@@ -75,6 +80,7 @@ app.get('/', async (_req, res) => {
   )
 })
 app.get('/following', async (req, res) => followage(req, res, authFile))
+app.get('/random-fact', async (req, res) => randomFact(req, res, authFile))
 
 app.listen(3553, '0.0.0.0', (error) => {
   if (error) throw error
