@@ -18,6 +18,16 @@ export type Command = (
   authFile: Auth | undefined
 ) => Promise<void>
 
+export interface CommandDescription {
+  endpoint: string
+  options?: string
+  description: string
+}
+
+export interface CommandDescriptionExport {
+  description: CommandDescription
+}
+
 export interface FollowingParams {
   from_id: string
   to_name: string

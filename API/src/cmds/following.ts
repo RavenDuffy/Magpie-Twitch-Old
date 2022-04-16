@@ -1,7 +1,18 @@
 import Axios from 'axios'
 import ms from 'ms'
 import { getUser } from '../get-user'
-import { Command, FollowingParams, FollowingPayload } from 'types/api'
+import {
+  Command,
+  CommandDescription,
+  FollowingParams,
+  FollowingPayload,
+} from 'types/api'
+
+export const description: CommandDescription = {
+  endpoint: 'following',
+  options: 'from_id: number, to_name: string',
+  description: 'Used to get how long a user has been following another',
+}
 
 export const followage: Command = async (req, res, authFile) => {
   const { from_id, to_name } = req.query as FollowingParams

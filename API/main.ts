@@ -5,10 +5,16 @@ import path from 'path'
 import fs from 'fs'
 import Axios, { AxiosResponse } from 'axios'
 import { Auth, AuthResponse } from 'types/twitch'
-import { followage } from './src/cmds/followage'
+import { followage } from './src/cmds/following'
+import { CommandDescription, CommandDescriptionExport } from 'types/api'
 
 const app = Fastify({ logger: true })
 app.register(middie)
+
+app.decorateReply('sendFile', function (filename: string) {
+  const stream = fs.createReadStream(filename)
+  this.type('text/html').send(stream)
+})
 
 let authFile: Auth | undefined
 fs.existsSync(path.join(__dirname, 'auth.json')) &&
@@ -46,8 +52,27 @@ app.addHook('onRequest', async (_req, _res) => {
   }
 })
 
-app.get('/', (_req, res) => {
-  res.send({ message: 'Welcome to the MagpieMod API!' })
+app.get('/', async (_req, res) => {
+  const cmds: CommandDescription[] = []
+  await Promise.all(
+    fs
+      .readdirSync(path.join(__dirname, 'src/cmds'), 'utf-8')
+      .map(async (file) => {
+        import(path.join(__dirname, 'src/cmds', file.split('.')[0])).then(
+          (cmd: CommandDescriptionExport) => cmds.push(cmd.description)
+        )
+      })
+  )
+  console.log(cmds)
+
+  const cmdStrings = cmds.map((cmd) => {
+    return `\n  endpoint: ${cmd.endpoint}\n\toptions: ${cmd.options}\n\tdescription: ${cmd.description}\n\n`
+  })
+  console.log(cmdStrings)
+
+  res.send(
+    `Welcome to the MagpieMod twitch API\n\nWe support the following endpoints:\n${cmdStrings}`
+  )
 })
 app.get('/following', async (req, res) => followage(req, res, authFile))
 
