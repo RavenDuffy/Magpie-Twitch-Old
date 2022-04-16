@@ -64,7 +64,6 @@ app.get('/', async (_req, res) => {
         )
       })
   )
-  console.log(cmds)
 
   const cmdStrings = cmds
     .map((cmd) => {
@@ -73,7 +72,6 @@ app.get('/', async (_req, res) => {
       }description: ${cmd.description}\n`
     })
     .join('\n')
-  console.log(cmdStrings)
 
   res.send(
     `Welcome to the MagpieMod twitch API\n\nWe support the following endpoints:\n${cmdStrings}`

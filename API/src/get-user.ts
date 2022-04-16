@@ -4,8 +4,8 @@ import path from 'path'
 import { Auth } from 'types/twitch'
 
 export const getUser = async (login: string) => {
-  return await import(path.join(__dirname, '../', 'auth.json')).then(
-    async (auth: Auth) => {
+  return await import(path.join(__dirname, '../', 'auth.json'))
+    .then(async (auth: Auth) => {
       return await Axios.get('https://api.twitch.tv/helix/users', {
         headers: {
           'Client-ID': process.env.CHATBOT_ID!,
@@ -15,6 +15,6 @@ export const getUser = async (login: string) => {
       })
         .then((response) => response.data.data[0])
         .catch((error) => error)
-    }
-  )
+    })
+    .catch((error) => error)
 }

@@ -14,18 +14,36 @@ export const description: CommandDescription = {
   description: 'Used to get how long a user has been following another',
 }
 
-export const followage: Command = async (req, res, authFile) => {
+export const followage: Command = async (req, res, authFile): Promise<void> => {
   const { from_id, to_name } = req.query as FollowingParams
-  if (!(from_id && to_name)) return
 
-  const to = await getUser(to_name)
   const payload: FollowingPayload = {
     followingFor: 0,
     isFollowing: false,
     error: null,
   }
 
-  Axios.get(`https://api.twitch.tv/helix/users/follows`, {
+  if (!(from_id && to_name)) {
+    res.status(400)
+    res.send({
+      ...payload,
+      error: 'Please specify both "from_id" and "to_name"',
+    })
+    return
+  }
+
+  const to = await getUser(to_name)
+
+  if (to.id === undefined) {
+    res.status(404)
+    res.send({
+      ...payload,
+      error: 'Could not find user (to_name option)',
+    })
+    return
+  }
+
+  await Axios.get(`https://api.twitch.tv/helix/users/follows`, {
     headers: {
       'Client-ID': process.env.CHATBOT_ID!,
       Authorization: `Bearer ${authFile?.access_token}`,
@@ -37,11 +55,11 @@ export const followage: Command = async (req, res, authFile) => {
   })
     .then((response) => {
       if (response?.data?.data[0] === undefined) {
-        res.send({ ...payload })
+        res.send(payload)
         return
       }
       const followedTimeStamp = new Date(
-        response?.data?.data[0]?.followed_at
+        response.data.data[0]?.followed_at
       ).getTime()
       const followedTimeDiff = new Date().getTime() - followedTimeStamp
 
@@ -51,5 +69,8 @@ export const followage: Command = async (req, res, authFile) => {
         followingFor: ms(followedTimeDiff, { long: true }),
       })
     })
-    .catch((error) => res.send({ ...payload, error: error }))
+    .catch((error) => {
+      res.status(500)
+      res.send({ ...payload, error: error })
+    })
 }
