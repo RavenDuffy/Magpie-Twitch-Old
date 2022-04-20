@@ -64,18 +64,9 @@ app.get('/', async (_req, res) => {
         )
       })
   )
+  const cmdStrings = cmds.map((cmd) => ({ ...cmd }))
 
-  const cmdStrings = cmds
-    .map((cmd) => {
-      return `\n  endpoint: ${cmd.endpoint}\n\t${
-        cmd.options ? `options: ${cmd.options}\n\t` : ''
-      }description: ${cmd.description}\n`
-    })
-    .join('\n')
-
-  res.send(
-    `Welcome to the MagpieMod twitch API\n\nWe support the following endpoints:\n${cmdStrings}`
-  )
+  res.send({ welcome: `Welcome to the MagpieMod twitch API`, cmds: cmdStrings })
 })
 app.get('/following', async (req, res) => followage(req, res, authFile))
 app.get('/random-fact', async (req, res) => randomFact(req, res, authFile))
