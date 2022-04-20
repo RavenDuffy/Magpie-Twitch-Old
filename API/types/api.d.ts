@@ -38,3 +38,8 @@ export interface FollowingPayload {
   isFollowing: boolean
   error: object | null
 }
+
+export interface Fact {
+  text: string
+  source: string
+}
