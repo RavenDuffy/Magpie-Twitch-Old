@@ -3,7 +3,7 @@ import 'dotenv/config'
 import { channels } from './config.json'
 import { messageHandler } from './src/message-handler'
 
-const config = {
+const twitchConfig = {
   identity: {
     username: process.env.CHATBOT_USERNAME,
     password: process.env.CHATBOT_PASSWORD,
@@ -11,7 +11,7 @@ const config = {
   channels: channels,
 }
 
-const client = new tmi.client(config)
+const client = new tmi.client(twitchConfig)
 
 client.on('message', (...rest) => messageHandler(...rest, client))
 
