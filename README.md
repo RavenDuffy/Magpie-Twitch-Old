@@ -12,7 +12,9 @@ The goal of this project is to create a suite of tools anyone can host themselve
 
 | File Name          | Description                   |
 | ------------------ | ----------------------------- |
+| [Front](Front)     | Frontend for setup and config |
 | [ChatBot](ChatBot) | Basic chat bot functionallity |
+| [Widgets](Widgets) | Serves widgets via links      |
 | [API](API)         | API to handle twitch requests |
 
 ## Docker
