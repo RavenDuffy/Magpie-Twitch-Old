@@ -9,7 +9,7 @@ import { followage } from './src/cmds/following'
 import { CommandDescription, CommandDescriptionExport } from 'types/api'
 import { randomFact } from './src/cmds/random-fact'
 
-const app = Fastify({ logger: true })
+const app = Fastify({ logger: process.env.NODE_ENV === 'development' })
 app.register(middie)
 
 app.decorateReply('sendFile', function (filename: string) {
@@ -18,12 +18,12 @@ app.decorateReply('sendFile', function (filename: string) {
 })
 
 let authFile: Auth | undefined
-fs.existsSync(path.join(__dirname, 'auth.json')) &&
-  import(path.join(__dirname, 'auth.json')).then(
+fs.existsSync(path.join(__dirname, 'twitch.auth.json')) &&
+  import(path.join(__dirname, 'twitch.auth.json')).then(
     (auth: Auth) => (authFile = auth)
   )
 
-const runAuth = (): void => {
+const runTwitchAuth = (): void => {
   Axios.post('https://id.twitch.tv/oauth2/token', null, {
     params: {
       client_id: process.env.CHATBOT_ID,
@@ -32,23 +32,23 @@ const runAuth = (): void => {
     },
   }).then((res: AxiosResponse<AuthResponse, any>) => {
     fs.writeFileSync(
-      path.join(__dirname, 'auth.json'),
+      path.join(__dirname, 'twitch.auth.json'),
       JSON.stringify({
         ...res.data,
         expires_on: new Date().getTime() + res.data.expires_in - 5000,
       })
     )
-    import(path.join(__dirname, 'auth.json')).then((auth: Auth) => {
+    import(path.join(__dirname, 'twitch.auth.json')).then((auth: Auth) => {
       authFile = auth
     })
   })
 }
 app.addHook('onRequest', async (_req, _res) => {
-  if (!fs.existsSync(path.join(__dirname, 'auth.json'))) {
-    runAuth()
+  if (!fs.existsSync(path.join(__dirname, 'twitch.auth.json'))) {
+    runTwitchAuth()
   } else {
-    import(path.join(__dirname, 'auth.json')).then((auth: Auth) => {
-      if (auth.expires_on < new Date().getTime()) runAuth()
+    import(path.join(__dirname, 'twitch.auth.json')).then((auth: Auth) => {
+      if (auth.expires_on < new Date().getTime()) runTwitchAuth()
     })
   }
 })

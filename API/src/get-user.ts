@@ -4,7 +4,7 @@ import path from 'path'
 import { Auth } from 'types/twitch'
 
 export const getUser = async (login: string) => {
-  return await import(path.join(__dirname, '../', 'auth.json'))
+  return await import(path.join(__dirname, '../', 'twitch.auth.json'))
     .then(async (auth: Auth) => {
       return await Axios.get('https://api.twitch.tv/helix/users', {
         headers: {
