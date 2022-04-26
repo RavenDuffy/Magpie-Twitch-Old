@@ -1,5 +1,5 @@
 <div width="250px">
-<img src="temp_logo.png" alt="temp-logo" align="left" style="height: 150px;">
+<img src="logo.svg" alt="temp-logo" align="left" style="height: 150px;">
 
 # Magpie-Twitch
 
@@ -16,6 +16,15 @@ The goal of this project is to create a suite of tools anyone can host themselve
 | [ChatBot](ChatBot) | Basic chat bot functionallity   |
 | [Widgets](Widgets) | Serves widgets via links        |
 | [API](API)         | API to handle incoming requests |
+
+## Getting Setup
+
+This project uses Yarn 3 which requires some extra work depending on the editor you prefer:
+
+### vscode
+
+1. `yarn sdks vscode`
+2. `"typescript.tsdk": ".yarn/sdks/typescript/lib"`
 
 ## Docker
 
